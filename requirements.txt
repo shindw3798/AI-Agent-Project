@@ -1,0 +1,11 @@
+# Direct dependencies pinned to the validated environment.
+fastapi==0.150.0
+fastmcp==4.1.1
+httpx==0.28.1
+langchain-core==1.6.12
+langgraph==1.2.16
+langsmith==0.14.11
+mcp==2.3.0
+pydantic==2.14.1
+python-dotenv==1.2.4
+uvicorn==0.54.0

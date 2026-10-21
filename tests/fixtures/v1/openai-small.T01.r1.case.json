@@ -1,0 +1,126 @@
+{
+  "model_calls": [
+    {
+      "stage": "report",
+      "output": {
+        "hypotheses": [
+          {
+            "text": "CPU 사용률 급증으로 인해 결제 응답이 느려지고 있다.",
+            "fact_ids": [
+              "obs:payments-service:cpu_percent",
+              "obs:payments-service:alert_0"
+            ],
+            "evidence_ids": [
+              "payments-service:cpu-spike:0"
+            ]
+          },
+          {
+            "text": "특정 요청 패턴이 결제 서비스의 성능 저하를 초래하고 있다.",
+            "fact_ids": [
+              "obs:payments-service:alert_1"
+            ],
+            "evidence_ids": []
+          }
+        ],
+        "actions": [
+          {
+            "text": "CPU 사용률을 낮추기 위해 오토스케일링 그룹에 인스턴스를 추가한다.",
+            "system_name": "payments-service",
+            "evidence_ids": [
+              "payments-service:cpu-spike:0"
+            ],
+            "prerequisites": "현재 CPU 사용률이 90%를 초과하고 있어야 한다."
+          },
+          {
+            "text": "최근 배포 후 성능 저하가 발생했는지 확인하고 필요 시 롤백한다.",
+            "system_name": "payments-service",
+            "evidence_ids": [
+              "payments-service:cpu-spike:0"
+            ],
+            "prerequisites": "최근 배포가 있었고, CPU 사용률이 급증한 시점과 관련이 있어야 한다."
+          }
+        ]
+      }
+    },
+    {
+      "stage": "report",
+      "output": {
+        "hypotheses": [
+          {
+            "text": "CPU 사용률 급증으로 인해 결제 응답이 느려질 수 있다.",
+            "fact_ids": [
+              "obs:payments-service:cpu_percent",
+              "obs:payments-service:alert_0"
+            ],
+            "evidence_ids": [
+              "payments-service:cpu-spike:0"
+            ]
+          },
+          {
+            "text": "특정 요청 패턴이 결제 서비스의 성능 저하를 유발할 수 있다.",
+            "fact_ids": [
+              "obs:payments-service:alert_1"
+            ],
+            "evidence_ids": []
+          }
+        ],
+        "actions": [
+          {
+            "text": "CPU 사용률을 모니터링하고 필요 시 오토스케일링을 적용하여 부하를 분산합니다.",
+            "system_name": "payments-service",
+            "evidence_ids": [
+              "payments-service:cpu-spike:0"
+            ],
+            "prerequisites": "현재 CPU 사용률과 최근 배포/트래픽 변화를 확인해야 합니다."
+          },
+          {
+            "text": "최근 로그를 분석하여 특정 요청 패턴이 문제인지 확인합니다.",
+            "system_name": "payments-service",
+            "evidence_ids": [],
+            "prerequisites": "로그 접근 권한이 필요합니다."
+          }
+        ]
+      }
+    },
+    {
+      "stage": "report",
+      "output": {
+        "hypotheses": [
+          {
+            "text": "CPU 사용률 급증으로 인해 결제 응답이 느려질 수 있다.",
+            "fact_ids": [
+              "obs:payments-service:cpu_percent",
+              "obs:payments-service:alert_0"
+            ],
+            "evidence_ids": [
+              "payments-service:cpu-spike:0"
+            ]
+          },
+          {
+            "text": "특정 요청 패턴이 결제 응답 지연의 원인일 수 있다.",
+            "fact_ids": [
+              "obs:payments-service:alert_1"
+            ],
+            "evidence_ids": []
+          }
+        ],
+        "actions": [
+          {
+            "text": "CPU 사용률을 모니터링하고 필요 시 오토스케일링을 고려하세요.",
+            "system_name": "payments-service",
+            "evidence_ids": [
+              "payments-service:cpu-spike:0"
+            ],
+            "prerequisites": "현재 CPU 사용률과 최근 배포/트래픽 변화를 확인해야 합니다."
+          },
+          {
+            "text": "최근 로그를 확인하여 특정 요청 패턴을 분석하세요.",
+            "system_name": "payments-service",
+            "evidence_ids": [],
+            "prerequisites": "로그 접근 권한이 필요합니다."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "model_calls": [
+    {
+      "stage": "report",
+      "output": {
+        "hypotheses": [
+          {
+            "text": "auth-service의 커넥션 풀 사용률이 높아져서 CPU 사용량이 증가했을 가능성이 있다.",
+            "fact_ids": [
+              "obs:auth-service:alert_1",
+              "obs:auth-service:cpu_percent"
+            ],
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ]
+          },
+          {
+            "text": "auth-service의 상태가 저하되어 CPU 사용량이 증가했을 가능성이 있다.",
+            "fact_ids": [
+              "obs:auth-service:status",
+              "obs:auth-service:cpu_percent"
+            ],
+            "evidence_ids": []
+          }
+        ],
+        "actions": [
+          {
+            "text": "커넥션 풀 크기를 늘리거나 느린 쿼리/외부 호출에 타임아웃을 설정한다.",
+            "system_name": "auth-service",
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ],
+            "prerequisites": "p95 지연시간과 커넥션 풀 사용률을 확인해야 한다."
+          }
+        ]
+      }
+    },
+    {
+      "stage": "report",
+      "output": {
+        "hypotheses": [
+          {
+            "text": "auth-service의 커넥션 풀 사용률이 높아져서 CPU 사용량이 증가했을 가능성이 있다.",
+            "fact_ids": [
+              "obs:auth-service:alert_1",
+              "obs:auth-service:cpu_percent"
+            ],
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ]
+          },
+          {
+            "text": "auth-service의 CPU 사용량이 높아져서 전체 시스템 성능에 영향을 미쳤을 가능성이 있다.",
+            "fact_ids": [
+              "obs:auth-service:cpu_percent"
+            ],
+            "evidence_ids": []
+          }
+        ],
+        "actions": [
+          {
+            "text": "커넥션 풀 사용률을 모니터링하고 필요 시 풀 크기를 늘리거나 느린 쿼리에 타임아웃을 설정하라.",
+            "system_name": "auth-service",
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ],
+            "prerequisites": "현재 커넥션 풀 사용률을 확인해야 한다."
+          }
+        ]
+      }
+    },
+    {
+      "stage": "report",
+      "output": {
+        "hypotheses": [
+          {
+            "text": "auth-service의 커넥션 풀 사용률이 높아져서 CPU 사용량이 증가했을 가능성이 있다.",
+            "fact_ids": [
+              "obs:auth-service:alert_1",
+              "obs:auth-service:cpu_percent"
+            ],
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ]
+          },
+          {
+            "text": "auth-service의 CPU 사용량이 높아져서 전체 시스템 성능에 영향을 미쳤을 가능성이 있다.",
+            "fact_ids": [
+              "obs:auth-service:cpu_percent"
+            ],
+            "evidence_ids": []
+          }
+        ],
+        "actions": [
+          {
+            "text": "커넥션 풀 사용률을 모니터링하고 필요 시 풀 크기를 늘리거나 느린 쿼리에 타임아웃을 설정한다.",
+            "system_name": "auth-service",
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ],
+            "prerequisites": "현재 커넥션 풀 사용률과 p95 지연시간을 확인해야 한다."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "model_calls": [
+    {
+      "stage": "report",
+      "output": {
+        "hypotheses": [
+          {
+            "text": "로그인 지연은 커넥션 풀 사용률이 높기 때문일 수 있다.",
+            "fact_ids": [
+              "obs:auth-service:alert_1",
+              "obs:auth-service:alert_0"
+            ],
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ]
+          },
+          {
+            "text": "CPU 사용률이 높아 시스템 성능 저하가 발생했을 가능성이 있다.",
+            "fact_ids": [
+              "obs:auth-service:cpu_percent"
+            ],
+            "evidence_ids": []
+          },
+          {
+            "text": "메모리 사용률이 높아 시스템 성능 저하가 발생했을 가능성이 있다.",
+            "fact_ids": [
+              "obs:auth-service:memory_percent"
+            ],
+            "evidence_ids": []
+          }
+        ],
+        "actions": [
+          {
+            "text": "커넥션 풀 크기를 늘리거나 느린 쿼리/외부 호출에 타임아웃을 설정한다.",
+            "system_name": "auth-service",
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ],
+            "prerequisites": "현재 커넥션 풀 사용률이 90%를 초과하는지 확인해야 한다."
+          },
+          {
+            "text": "지연이 특정 리전/인스턴스에 몰려 있는지 확인하고 해당 인스턴스를 로드밸런서에서 일시 제외한다.",
+            "system_name": "auth-service",
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ],
+            "prerequisites": "p95 지연시간이 임계치(1.0s)를 초과하는지 확인해야 한다."
+          },
+          {
+            "text": "느린 쿼리 로그를 분석하여 근본 원인을 문서화하고 후속 최적화 티켓을 등록한다.",
+            "system_name": "auth-service",
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ],
+            "prerequisites": "지연이 정상화된 후에 수행해야 한다."
+          }
+        ]
+      }
+    },
+    {
+      "stage": "report",
+      "output": {
+        "hypotheses": [
+          {
+            "text": "로그인 지연은 커넥션 풀 사용률이 높기 때문일 수 있다.",
+            "fact_ids": [
+              "obs:auth-service:alert_1"
+            ],
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ]
+          },
+          {
+            "text": "로그인 지연은 시스템의 CPU 사용률이 높기 때문일 수 있다.",
+            "fact_ids": [
+              "obs:auth-service:cpu_percent"
+            ],
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ]
+          },
+          {
+            "text": "로그인 지연은 시스템의 메모리 사용률이 높기 때문일 수 있다.",
+            "fact_ids": [
+              "obs:auth-service:memory_percent"
+            ],
+            "evidence_ids": []
+          }
+        ],
+        "actions": [
+          {
+            "text": "커넥션 풀 크기를 늘리거나 느린 쿼리/외부 호출에 타임아웃을 설정한다.",
+            "system_name": "auth-service",
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ],
+            "prerequisites": "커넥션 풀 사용률이 90%를 넘는지 확인한다."
+          },
+          {
+            "text": "지연이 특정 리전/인스턴스에 몰려 있는지 확인하고 해당 인스턴스를 로드밸런서에서 일시 제외한다.",
+            "system_name": "auth-service",
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ],
+            "prerequisites": "p95 지연시간이 임계치(1.0s)를 초과하는지 확인한다."
+          },
+          {
+            "text": "느린 쿼리 로그를 분석해 근본 원인을 문서화하고 후속 최적화 티켓을 등록한다.",
+            "system_name": "auth-service",
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ],
+            "prerequisites": "5분 내 p95가 임계치(1.0s) 아래로 내려오지 않는지 확인한다."
+          }
+        ]
+      }
+    },
+    {
+      "stage": "report",
+      "output": {
+        "hypotheses": [
+          {
+            "text": "로그인 지연은 커넥션 풀 사용률이 높기 때문일 수 있다.",
+            "fact_ids": [
+              "obs:auth-service:alert_1",
+              "obs:auth-service:alert_0"
+            ],
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ]
+          },
+          {
+            "text": "CPU 사용률이 높아 시스템 성능 저하가 발생했을 가능성이 있다.",
+            "fact_ids": [
+              "obs:auth-service:cpu_percent"
+            ],
+            "evidence_ids": []
+          },
+          {
+            "text": "메모리 사용률이 높아 시스템 성능 저하가 발생했을 가능성이 있다.",
+            "fact_ids": [
+              "obs:auth-service:memory_percent"
+            ],
+            "evidence_ids": []
+          }
+        ],
+        "actions": [
+          {
+            "text": "커넥션 풀 크기를 늘리거나 느린 쿼리/외부 호출에 타임아웃을 설정한다.",
+            "system_name": "auth-service",
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ],
+            "prerequisites": "커넥션 풀 사용률이 90%를 넘는지 확인해야 한다."
+          },
+          {
+            "text": "지연이 특정 리전/인스턴스에 몰려 있으면 해당 인스턴스를 로드밸런서에서 일시 제외한다.",
+            "system_name": "auth-service",
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ],
+            "prerequisites": "p95 지연시간이 임계치(1.0s)를 초과하는지 확인해야 한다."
+          },
+          {
+            "text": "정상화 후 느린 쿼리 로그를 분석해 근본 원인을 문서화하고 후속 최적화 티켓을 등록한다.",
+            "system_name": "auth-service",
+            "evidence_ids": [
+              "auth-service:high-latency:0"
+            ],
+            "prerequisites": "p95 지연시간이 5분 내에 임계치(1.0s) 아래로 내려오지 않아야 한다."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "model_calls": [
+    {
+      "stage": "report",
+      "output": {
+        "hypotheses": [
+          {
+            "text": "네트워크 패킷 손실로 인해 서비스가 저하되었을 가능성이 있다.",
+            "fact_ids": [
+              "obs:gateway-service:status",
+              "obs:gateway-service:alert_1"
+            ],
+            "evidence_ids": [
+              "gateway-service:network-timeout:0"
+            ]
+          },
+          {
+            "text": "업스트림 서비스인 payments-service와의 타임아웃 문제로 인해 서비스가 저하되었을 가능성이 있다.",
+            "fact_ids": [
+              "obs:gateway-service:status",
+              "obs:gateway-service:alert_0"
+            ],
+            "evidence_ids": []
+          }
+        ],
+        "actions": [
+          {
+            "text": "네트워크 상태를 점검하고, 최근 변경 사항을 확인하여 문제를 해결한다.",
+            "system_name": "gateway-service",
+            "evidence_ids": [
+              "gateway-service:network-timeout:0"
+            ],
+            "prerequisites": "get_monitoring_status로 어떤 시스템 간 호출에서 타임아웃이 발생하는지 확인해야 한다."
+          }
+        ]
+      }
+    },
+    {
+      "stage": "report",
+      "output": {
+        "hypotheses": [
+          {
+            "text": "네트워크 패킷 손실로 인해 gateway-service의 성능이 저하되었을 가능성이 있다.",
+            "fact_ids": [
+              "obs:gateway-service:status",
+              "obs:gateway-service:alert_1"
+            ],
+            "evidence_ids": [
+              "gateway-service:network-timeout:0"
+            ]
+          },
+          {
+            "text": "upstream 서비스인 payments-service와의 통신에서 타임아웃이 발생했을 가능성이 있다.",
+            "fact_ids": [
+              "obs:gateway-service:alert_0"
+            ],
+            "evidence_ids": []
+          }
+        ],
+        "actions": [
+          {
+            "text": "네트워크 경로를 점검하고, 최근 변경 사항을 확인하여 문제를 해결한다.",
+            "system_name": "gateway-service",
+            "evidence_ids": [
+              "gateway-service:network-timeout:0"
+            ],
+            "prerequisites": "get_monitoring_status로 어떤 시스템 간 호출에서 타임아웃이 발생하는지 확인한다."
+          }
+        ]
+      }
+    },
+    {
+      "stage": "report",
+      "output": {
+        "hypotheses": [
+          {
+            "text": "네트워크 패킷 손실로 인해 gateway-service의 성능이 저하되었을 가능성이 있다.",
+            "fact_ids": [
+              "obs:gateway-service:status",
+              "obs:gateway-service:alert_1"
+            ],
+            "evidence_ids": [
+              "gateway-service:network-timeout:0"
+            ]
+          },
+          {
+            "text": "upstream 서비스인 payments-service와의 통신에서 타임아웃이 발생했을 가능성이 있다.",
+            "fact_ids": [
+              "obs:gateway-service:alert_0"
+            ],
+            "evidence_ids": []
+          }
+        ],
+        "actions": [
+          {
+            "text": "네트워크 경로를 점검하고, 최근 변경 사항을 확인하여 문제를 해결한다.",
+            "system_name": "gateway-service",
+            "evidence_ids": [
+              "gateway-service:network-timeout:0"
+            ],
+            "prerequisites": "get_monitoring_status로 어떤 시스템 간 호출에서 타임아웃이 발생하는지 확인한다."
+          }
+        ]
+      }
+    }
+  ]
+}

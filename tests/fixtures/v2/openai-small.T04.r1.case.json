@@ -1,0 +1,159 @@
+{
+  "result": {
+    "report": {
+      "systems": [
+        "auth-service"
+      ],
+      "facts": [
+        {
+          "fact_id": "obs:auth-service:status",
+          "observation_id": "obs:auth-service",
+          "system_name": "auth-service",
+          "metric_name": "status",
+          "value": "degraded",
+          "unit": ""
+        },
+        {
+          "fact_id": "obs:auth-service:cpu_percent",
+          "observation_id": "obs:auth-service",
+          "system_name": "auth-service",
+          "metric_name": "cpu_percent",
+          "value": 78.0,
+          "unit": "%"
+        },
+        {
+          "fact_id": "obs:auth-service:memory_percent",
+          "observation_id": "obs:auth-service",
+          "system_name": "auth-service",
+          "metric_name": "memory_percent",
+          "value": 61.0,
+          "unit": "%"
+        },
+        {
+          "fact_id": "obs:auth-service:alert_0",
+          "observation_id": "obs:auth-service",
+          "system_name": "auth-service",
+          "metric_name": "alert_0",
+          "value": "p95 latency 2.4s (threshold 1.0s)",
+          "unit": ""
+        },
+        {
+          "fact_id": "obs:auth-service:alert_1",
+          "observation_id": "obs:auth-service",
+          "system_name": "auth-service",
+          "metric_name": "alert_1",
+          "value": "connection pool 92% used",
+          "unit": ""
+        }
+      ],
+      "hypotheses": [
+        {
+          "text": "커넥션 풀 사용률이 높아져서 로그인 지연이 발생했을 가능성이 있다.",
+          "fact_ids": [
+            "obs:auth-service:alert_1"
+          ],
+          "evidence_ids": [
+            "auth-service:high-latency:0"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "text": "커넥션 풀 사용률이 90%를 넘으면 풀 크기를 늘리거나 느린 쿼리/외부 호출에 타임아웃을 건다.",
+          "system_name": "auth-service",
+          "evidence_ids": [
+            "auth-service:high-latency:0"
+          ],
+          "prerequisites": "get_monitoring_status로 p95 지연시간과 커넥션 풀 사용률을 확인한다."
+        },
+        {
+          "text": "정상화 후 느린 쿼리 로그를 분석해 근본 원인을 문서화하고 후속 최적화 티켓을 등록한다.",
+          "system_name": "auth-service",
+          "evidence_ids": [
+            "auth-service:high-latency:0"
+          ],
+          "prerequisites": "5분 내 p95가 임계치(1.0s) 아래로 내려오지 않으면 캐시 계층 또는 읽기 복제본으로 트래픽을 분산한다."
+        }
+      ],
+      "limitations": [
+        "모니터링은 실습용 시뮬레이션입니다. 실제 조치는 실행하지 않았습니다.",
+        "규칙 검증은 수치와 출처 연결을 검사하며 원인·권고의 의미적 정확성 전체를 보장하지 않습니다."
+      ],
+      "references": [
+        {
+          "evidence_id": "auth-service:high-latency:0",
+          "document_id": "high-latency",
+          "chunk_id": "high-latency:0",
+          "title": "Runbook: 응답 지연(High Latency) 대응 절차",
+          "incident_type": "high-latency",
+          "text": "# Runbook: 응답 지연(High Latency) 대응 절차\n\n1. get_monitoring_status로 p95 지연시간과 커넥션 풀 사용률을 확인한다.\n2. 커넥션 풀 사용률이 90%를 넘으면 풀 크기를 늘리거나 느린 쿼리/외부 호출에 타임아웃을 건다.\n3. 지연이 특정 리전/인스턴스에 몰려 있으면 해당 인스턴스를 로드밸런서에서 일시 제외한다.\n4. 5분 내 p95가 임계치(1.0s) 아래로 내려오지 않으면 캐시 계층 또는 읽기 복제본으로 트래픽을 분산한다.\n5. 정상화 후 느린 쿼리 로그를 분석해 근본 원인을 문서화하고 후속 최적화 티켓을 등록한다.",
+          "score": 0.483792,
+          "source_version": "0df4846e66993b0b9312327a3f51fe6de663d701c64c2c7c10a9e2c35e9e63a3",
+          "system_name": "auth-service"
+        }
+      ]
+    },
+    "facts": [
+      {
+        "fact_id": "obs:auth-service:status",
+        "observation_id": "obs:auth-service",
+        "system_name": "auth-service",
+        "metric_name": "status",
+        "value": "degraded",
+        "unit": ""
+      },
+      {
+        "fact_id": "obs:auth-service:cpu_percent",
+        "observation_id": "obs:auth-service",
+        "system_name": "auth-service",
+        "metric_name": "cpu_percent",
+        "value": 78.0,
+        "unit": "%"
+      },
+      {
+        "fact_id": "obs:auth-service:memory_percent",
+        "observation_id": "obs:auth-service",
+        "system_name": "auth-service",
+        "metric_name": "memory_percent",
+        "value": 61.0,
+        "unit": "%"
+      },
+      {
+        "fact_id": "obs:auth-service:alert_0",
+        "observation_id": "obs:auth-service",
+        "system_name": "auth-service",
+        "metric_name": "alert_0",
+        "value": "p95 latency 2.4s (threshold 1.0s)",
+        "unit": ""
+      },
+      {
+        "fact_id": "obs:auth-service:alert_1",
+        "observation_id": "obs:auth-service",
+        "system_name": "auth-service",
+        "metric_name": "alert_1",
+        "value": "connection pool 92% used",
+        "unit": ""
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "auth-service:high-latency:0",
+        "document_id": "high-latency",
+        "chunk_id": "high-latency:0",
+        "title": "Runbook: 응답 지연(High Latency) 대응 절차",
+        "incident_type": "high-latency",
+        "text": "# Runbook: 응답 지연(High Latency) 대응 절차\n\n1. get_monitoring_status로 p95 지연시간과 커넥션 풀 사용률을 확인한다.\n2. 커넥션 풀 사용률이 90%를 넘으면 풀 크기를 늘리거나 느린 쿼리/외부 호출에 타임아웃을 건다.\n3. 지연이 특정 리전/인스턴스에 몰려 있으면 해당 인스턴스를 로드밸런서에서 일시 제외한다.\n4. 5분 내 p95가 임계치(1.0s) 아래로 내려오지 않으면 캐시 계층 또는 읽기 복제본으로 트래픽을 분산한다.\n5. 정상화 후 느린 쿼리 로그를 분석해 근본 원인을 문서화하고 후속 최적화 티켓을 등록한다.",
+        "score": 0.483792,
+        "source_version": "0df4846e66993b0b9312327a3f51fe6de663d701c64c2c7c10a9e2c35e9e63a3",
+        "system_name": "auth-service"
+      }
+    ],
+    "targets": [
+      "auth-service"
+    ],
+    "limitations": [
+      "모니터링은 실습용 시뮬레이션입니다. 실제 조치는 실행하지 않았습니다.",
+      "규칙 검증은 수치와 출처 연결을 검사하며 원인·권고의 의미적 정확성 전체를 보장하지 않습니다."
+    ]
+  }
+}
