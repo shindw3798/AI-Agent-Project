@@ -107,7 +107,7 @@ powershell -ExecutionPolicy Bypass -File .\run.ps1 -Backend openai -Port 8109
 - [구조와 주요 기능](docs/ARCHITECTURE.md)
 - [수정 사례와 테스트](docs/REVIEW_AND_TESTS.md)
 - [결과보고서](docs/결과보고서.pdf)
-- [발표자료](docs/발표자료.pptx)
+- [발표자료](docs/장애대응_Agent_발표자료.pptx)
 
 ## 검색 인덱스
 
