@@ -22,6 +22,50 @@
 | 조사 대상 확인 | 대상이 모호하면 사용자 선택을 받은 뒤 원래 질문으로 조사 |
 | 부분 실패 처리 | 일부 조회가 실패해도 확보한 결과와 실패 범위를 함께 안내 |
 
+## 전체 아키텍처
+
+사용자 화면에서 질문을 보내면 FastAPI가 요청을 받고, 조사 Graph가 필요한 도구와 모델을 호출한다. MCP는 도구 서버와의 연결을 담당하고, RAG는 현재 상태에 맞는 대응 문서를 찾는다.
+
+```mermaid
+flowchart TB
+    UI["사용자 화면, Vue<br/>web_chat.html"]
+    API["FastAPI와 ChatService<br/>요청 관리, 진행 이벤트와 결과 전달"]
+    DB[("SQLite<br/>대화와 대상 확인 상태")]
+    GRAPH["조사 Graph<br/>대상 확인, 조회, 검색, 작성과 검사"]
+    LLM["생성 모델<br/>질문 분류, 계획, 근거와 조치 단계 선택"]
+    CLIENT["MCP 클라이언트<br/>도구 호출과 응답 수신"]
+    subgraph OPS["별도 MCP 도구 서버, mcp_server.py"]
+        MON["get_monitoring_status<br/>실습용 시스템 상태 조회"]
+        SEARCH["search_runbooks<br/>관측 기반 RAG 검색"]
+    end
+    DATA[("monitoring.json<br/>실습용 관측 데이터")]
+    INDEX[("런북 6개와 검색 인덱스<br/>data/runbooks, runbook_index.json")]
+    EMB["OpenAI 임베딩 API<br/>알림과 질문을 벡터로 변환"]
+    REPORT["write 내부 처리<br/>사실 결합, 조치 원문 연결, 근거 검증"]
+
+    UI -->|질문 또는 대상 선택| API
+    API -->|진행 상태와 최종 보고서| UI
+    API <-->|저장과 복원| DB
+    API --> GRAPH
+    GRAPH -->|노드별 결과| API
+    GRAPH <-->|모델 호출| LLM
+    GRAPH <--> CLIENT
+    CLIENT <-->|stdio| MON
+    CLIENT <-->|stdio| SEARCH
+    MON --> DATA
+    SEARCH --> INDEX
+    SEARCH --> EMB
+    GRAPH --> REPORT
+    REPORT -->|검사 결과와 오류 피드백| GRAPH
+```
+
+- **기존 구조 활용:** FastAPI, Vue, MCP stdio 연결, 모델 어댑터와 SQLite.
+- **개선한 처리:** 대상 확인, 관측 기반 검색, 조치 원문 연결, 검증 후 재작성과 부분 실패 대응.
+- 런북 검색은 `mcp_server.py`에서 수행한다. 함께 포함된 `mcp_server_docs.py`는 원본의 문서 예제 서버로, 위 장애 검색 경로에서는 사용하지 않는다.
+- 정상 상태나 적용 가능한 문서가 없는 경우 임베딩 검색을 생략할 수 있다. 실제 복구 명령은 실행하지 않는다.
+
+세부 분기와 재작성 조건은 [Graph 처리 흐름](docs/ARCHITECTURE.md#graph-분기와-재작성)을 참고한다.
+
 ## 폴더 구조
 
 아래는 주요 파일과 폴더다. 명령은 `README.md`와 `server.py`가 있는 프로젝트 최상위 폴더에서 실행한다.
